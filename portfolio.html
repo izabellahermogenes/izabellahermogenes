@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio [Izabella Hermogenes]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f8f8;
+        }
+
+        /* Navigation */
+        .nav {
+            background-color: #2c2c2c;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            position: relative;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+
+        .nav-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            padding: 10px 0;
+            position: relative;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: white;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-link {
+            color: #ccc;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 70px;
+            min-height: 100vh;
+            padding: 60px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .portfolio-title {
+            font-size: 4rem;
+            font-weight: 300;
+            color: #2c2c2c;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .portfolio-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 12px 25px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-tab:hover,
+        .filter-tab.active {
+            background: #2c2c2c;
+            color: white;
+            border-color: #2c2c2c;
+            transform: translateY(-2px);
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 1;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .portfolio-item.hidden {
+            display: none;
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #666 0%, #333 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-image::before {
+            opacity: 1;
+        }
+
+        .portfolio-image.web {
+            background: linear-gradient(135deg, #666 0%, #333 100%);
+        }
+
+        .portfolio-image.design {
+            background: linear-gradient(135deg, #555 0%, #222 100%);
+        }
+
+        .portfolio-image.photography {
+            background: linear-gradient(135deg, #444 0%, #111 100%);
+        }
+
+        .image-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .portfolio-content {
+            padding: 30px;
+        }
+
+        .portfolio-category {
+            display: inline-block;
+            background: #f0f0f0;
+            color: #666;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .portfolio-item-title {
+            font-size: 1.4rem;
+            color: #2c2c2c;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .portfolio-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .portfolio-tag {
+            background: #f8f8f8;
+            color: #666;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .portfolio-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .portfolio-link {
+            color: #2c2c2c;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .portfolio-link:hover {
+            color: #666;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            color: #2c2c2c;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #2c2c2c;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #666;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+            }
+
+            .nav-center {
+                position: relative;
+                left: auto;
+                transform: none;
+                margin-bottom: 10px;
+            }
+
+            .nav-menu {
+                gap: 20px;
+                flex-direction: column;
+            }
+
+            .social-links {
+                margin-top: 10px;
+            }
+
+            .main-content {
+                margin-top: 120px;
+            }
+
+            .portfolio-title {
+                font-size: 3rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-tabs {
+                gap: 15px;
+            }
+
+            .cta-section {
+                padding: 40px 20px;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        .main-content {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href='index.html' class="logo">IH</a>
+
+            <div class="nav-center">
+                <ul class="nav-menu">
+                    <li><a href="about.html" class="nav-link">about</a></li>
+                    <li><a href="portfolio.html" class="nav-link active">portfolio</a></li>
+                    <li><a href="contact.html" class="nav-link">contact</a></li>
+                </ul>
+            </div>
+
+            <div class="social-links">
+
+                 <a href="https://github.com/izabellahermogenes" class="social-link" target="_blank" title="GitHub">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github">
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 
+    5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 
+    5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+  </svg>
+</a>
+
+                <a href="https://linkedin.com/in/izabella-hermogenes/" class="social-link" target="_blank" title="LinkedIn">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+    <rect width="4" height="12" x="2" y="9"/>
+    <circle cx="4" cy="4" r="2"/>
+  </svg>
+</a>
+                <a href="https://instagram.com/izahermogenes" class="social-link" target="_blank" title="Instagram">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram">
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+  </svg>
+</a>
+
+              <a href="https://www.tiktok.com/@saaabdh" class="social-link" target="_blank" title="TikTok">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16.8217 5.1344C16.0886 4.29394 15.6479 3.19805 15.6479 2H14.7293M16.8217 5.1344C17.4898 5.90063 18.3944 6.45788 19.4245 6.67608C19.7446 6.74574 20.0786 6.78293 20.4266 6.78293V10.2191C18.645 10.2191 16.9932 9.64801 15.6477 8.68211V15.6707C15.6477 19.1627 12.8082 22 9.32386 22C7.50043 22 5.85334 21.2198 4.69806 19.98C3.64486 18.847 2.99994 17.3331 2.99994 15.6707C2.99994 12.2298 5.75592 9.42509 9.17073 9.35079M16.8217 5.1344C16.8039 5.12276 16.7861 5.11101 16.7684 5.09914M6.9855 17.3517C6.64217 16.8781 6.43802 16.2977 6.43802 15.6661C6.43802 14.0734 7.73249 12.7778 9.32394 12.7778C9.62087 12.7778 9.9085 12.8288 10.1776 12.9124V9.40192C9.89921 9.36473 9.61622 9.34149 9.32394 9.34149C9.27287 9.34149 8.86177 9.36884 8.81073 9.36884M14.7244 2H12.2097L12.2051 15.7775C12.1494 17.3192 10.8781 18.5591 9.32386 18.5591C8.35878 18.5591 7.50971 18.0808 6.98079 17.3564" stroke="currentColor" stroke-linejoin="round"/>
+  </svg>
+</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1 class="portfolio-title">portfolio. -under construction 👷‍♀️</h1>
+                <p class="portfolio-subtitle">
+                    A collection of my creative work and professional projects that showcase my passion for design, development, and visual storytelling.
+                </p>
+            </section>
+
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">All Projects</button>
+                <button class="filter-tab" data-filter="web">App/Web Development</button>
+                <button class="filter-tab" data-filter="design">Design</button>
+                <button class="filter-tab" data-filter="photography">Visualization</button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="portfolio-grid">
+                <!-- Web Development Projects -->
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-image web">
+                        <div class="image-placeholder">💻</div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">App/Web Development</span>
+                        <h3 class="portfolio-item-title">BEMO Fitness App</h3>
+                        <p class="portfolio-description">
+                           A hybrid app designed for both running and strength training, with tracking features to help build consistency and stay on track.
+                        </p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Swift</span>
+                            <span class="portfolio-tag">Firebase</span>
+                            <span class="portfolio-tag">XCode</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link">GitHub →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Projects -->
+                <div class="portfolio-item" data-category="visualization">
+                    <div class="portfolio-image design">
+                        <div class="image-placeholder">🎨</div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Visualization</span>
+                        <h3 class="portfolio-item-title">Power BI</h3>
+                        <p class="portfolio-description">
+                            Analyzed healthcare data across 55.5K records. The project focused on identifying patterns in medical conditions, gender distribution, billing, and admissions over time.
+                        </p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">PowerBI</span>
+                            <span class="portfolio-tag">Excel</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photography Projects -->
+                <div class="portfolio-item" data-category="photography">
+                    <div class="portfolio-image photography">
+                        <div class="image-placeholder">📸</div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Visualization</span>
+                        <h3 class="portfolio-item-title">Data Cleaning</h3>
+                        <p class="portfolio-description">
+                            Cleaned 20,000+ rows in Excel using the CLEAN framework. Fixed nulls, duplicates, and formats. Logged issues, used Pivot Tables, and focused on truth-telling with data—not just fixing errors.
+                        </p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Excel</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Web Development Project 2 -->
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-image web">
+                        <div class="image-placeholder">🌐</div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Web Development</span>
+                        <h3 class="portfolio-item-title">Personal Website</h3>
+                        <p class="portfolio-description">
+                            Responsive frontend portfolio created with HTML, CSS, JavaScript in Visual Studio Code. GitHub Pages hosted site featuring data analysis and frontend development work.
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">HTML</span>
+                            <span class="portfolio-tag">CSS</span>
+                            <span class="portfolio-tag">JavaScript</span>
+                            <span class="portfolio-tag">GitHub</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link">GitHub →</a>
+                            <a href="#" class="portfolio-link">View Project →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Project 2 -->
+                <div class="portfolio-item" data-category="design">
+                    <div class="portfolio-image design">
+                        <div class="image-placeholder">📱</div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Design</span>
+                        <h3 class="portfolio-item-title">Mobile App UI/UX</h3>
+                        <p class="portfolio-description">
+                            User interface and experience design for a wellness tracking mobile app, focusing on intuitive navigation and calming visual aesthetics.
+                        </p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">UI/UX</span>
+                            <span class="portfolio-tag">Mobile Design</span>
+                            <span class="portfolio-tag">Prototyping</span>
+                            <span class="portfolio-tag">User Research</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link">View Prototype →</a>
+                            <a href="#" class="portfolio-link">Case Study →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photography Project 2 -->
+                <div class="portfolio-item" data-category="photography">
+                    <div class="portfolio-image photography">
+                        <div class="image-placeholder">🌿</div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Photography</span>
+                        <h3 class="portfolio-item-title">Nature & Portraits</h3>
+                        <p class="portfolio-description">
+                            Environmental portrait series connecting people with nature, shot in various outdoor locations with natural lighting techniques.
+                        </p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Portrait</span>
+                            <span class="portfolio-tag">Natural Light</span>
+                            <span class="portfolio-tag">Environmental</span>
+                            <span class="portfolio-tag">Photoshop</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link">View Series →</a>
+                            <a href="#" class="portfolio-link">Print Shop →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <h2 class="cta-title">Let's create something amazing together</h2>
+                <p class="cta-text">
+                    Have a project in mind? I'd love to hear about it and discuss how we can bring your vision to life.
+                </p>
+                <a href="contact.html" class="cta-button">Get In Touch</a>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Portfolio filtering functionality
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                filterTabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                tab.classList.add('active');
+
+                const filterValue = tab.getAttribute('data-filter');
+
+                portfolioItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.classList.remove('hidden');
+                        item.style.animation = 'fadeInUp 0.6s ease-out';
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Add staggered animation for initial load
+        portfolioItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>
