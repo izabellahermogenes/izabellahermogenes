@@ -212,6 +212,13 @@
             overflow: hidden;
         }
 
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
         .portfolio-image::before {
             content: '';
             position: absolute;
@@ -236,7 +243,7 @@
             background: linear-gradient(135deg, #555 0%, #222 100%);
         }
 
-        .portfolio-image.photography {
+        .portfolio-image.visualization {
             background: linear-gradient(135deg, #444 0%, #111 100%);
         }
 
@@ -501,7 +508,7 @@
                 <!-- Web Development Projects -->
                 <div class="portfolio-item" data-category="web">
                     <div class="portfolio-image web">
-                        <div class="image-placeholder">💻</div>
+                        <img src="images/bemoscreenshot.png" alt="bemo Screenshot">
                     </div>
                     <div class="portfolio-content">
                         <span class="portfolio-category">App/Web Development</span>
@@ -513,6 +520,7 @@
                             <span class="portfolio-tag">Swift</span>
                             <span class="portfolio-tag">Firebase</span>
                             <span class="portfolio-tag">XCode</span>
+                            <span class="portfolio-tag">Mobile Development</span>
                         </div>
                         <div class="portfolio-links">
                             <a href="#" class="portfolio-link">GitHub →</a>
@@ -520,10 +528,12 @@
                     </div>
                 </div>
 
+
+                
                 <!-- Design Projects -->
                 <div class="portfolio-item" data-category="visualization">
-                    <div class="portfolio-image design">
-                        <div class="image-placeholder">🎨</div>
+                    <div class="portfolio-image visualization">
+                          <img src="images/powerbi.png" alt="Power BI Screenshot">
                     </div>
                     <div class="portfolio-content">
                         <span class="portfolio-category">Visualization</span>
@@ -533,7 +543,7 @@
                         </p>
                         <div class="portfolio-tags">
                             <span class="portfolio-tag">PowerBI</span>
-                            <span class="portfolio-tag">Excel</span>
+                            <span class="portfolio-tag">Microsoft Excel</span>
                         </div>
                         <div class="portfolio-links">
                             <a href="#" class="portfolio-link">View Project →</a>
@@ -541,10 +551,10 @@
                     </div>
                 </div>
 
-                <!-- Photography Projects -->
-                <div class="portfolio-item" data-category="photography">
+                <!-- Visualization Projects -->
+                <div class="portfolio-item" data-category="visualization">
                     <div class="portfolio-image photography">
-                        <div class="image-placeholder">📸</div>
+                        <img src="images/1747615460995.jpeg" alt="To-Do List App Screenshot">
                     </div>
                     <div class="portfolio-content">
                         <span class="portfolio-category">Visualization</span>
@@ -553,7 +563,7 @@
                             Cleaned 20,000+ rows in Excel using the CLEAN framework. Fixed nulls, duplicates, and formats. Logged issues, used Pivot Tables, and focused on truth-telling with data—not just fixing errors.
                         </p>
                         <div class="portfolio-tags">
-                            <span class="portfolio-tag">Excel</span>
+                            <span class="portfolio-tag">Microsoft xcel</span>
                         </div>
                         <div class="portfolio-links">
                             <a href="#" class="portfolio-link">View Project →</a>
@@ -564,13 +574,13 @@
                 <!-- Web Development Project 2 -->
                 <div class="portfolio-item" data-category="web">
                     <div class="portfolio-image web">
-                        <div class="image-placeholder">🌐</div>
+                        <img src="images/homepage.png" alt="homepage Screenshot">
                     </div>
                     <div class="portfolio-content">
                         <span class="portfolio-category">Web Development</span>
                         <h3 class="portfolio-item-title">Personal Website</h3>
                         <p class="portfolio-description">
-                            Responsive frontend portfolio created with HTML, CSS, JavaScript in Visual Studio Code. GitHub Pages hosted site featuring data analysis and frontend development work.
+                            Responsive frontend portfolio created with HTML, CSS, JavaScript in Visual Studio Code.
                         <div class="portfolio-tags">
                             <span class="portfolio-tag">HTML</span>
                             <span class="portfolio-tag">CSS</span>
@@ -608,26 +618,24 @@
                     </div>
                 </div>
 
-                <!-- Photography Project 2 -->
-                <div class="portfolio-item" data-category="photography">
-                    <div class="portfolio-image photography">
-                        <div class="image-placeholder">🌿</div>
+                <!-- To-Do List Project -->
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-image web">
+                          <img src="images/todolistscreenshot.png" alt="To-Do List App Screenshot">
                     </div>
                     <div class="portfolio-content">
-                        <span class="portfolio-category">Photography</span>
-                        <h3 class="portfolio-item-title">Nature & Portraits</h3>
+                        <span class="portfolio-category">App/Web Development</span>
+                        <h3 class="portfolio-item-title">To-Do List App</h3>
                         <p class="portfolio-description">
-                            Environmental portrait series connecting people with nature, shot in various outdoor locations with natural lighting techniques.
+                            A clean, no-nonsense task manager built with React. Add your goals. Tap to slay. Delete the chaos.
                         </p>
                         <div class="portfolio-tags">
-                            <span class="portfolio-tag">Portrait</span>
-                            <span class="portfolio-tag">Natural Light</span>
-                            <span class="portfolio-tag">Environmental</span>
-                            <span class="portfolio-tag">Photoshop</span>
+                            <span class="portfolio-tag">React Native</span>
+                            <span class="portfolio-tag">Front End</span>
+                            <span class="portfolio-tag">UI/UX</span>
                         </div>
                         <div class="portfolio-links">
-                            <a href="#" class="portfolio-link">View Series →</a>
-                            <a href="#" class="portfolio-link">Print Shop →</a>
+                            <a href="#" class="portfolio-link">View App →</a>
                         </div>
                     </div>
                 </div>
