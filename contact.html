@@ -287,6 +287,12 @@
             transform: translateY(0);
         }
 
+        .submit-btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* Response Message */
         .response-message {
             margin-top: 20px;
@@ -375,6 +381,14 @@
                 transform: translateY(0);
             }
         }
+
+        footer {
+                font-size: 12px;
+                padding: 5px 86px;
+                text-align: left;
+                color: #666; /* slightly lighter than #333 for a subtle look */
+        }
+
     </style>
 </head>
 <body>
@@ -497,37 +511,88 @@
         </div>
     </main>
 
+    <!-- EmailJS SDK - Updated to latest version -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
     <script>
-        // Form submission handling
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Wait for page to load completely
+        document.addEventListener('DOMContentLoaded', function() {
             
-            const responseMessage = document.getElementById('responseMessage');
-            const submitBtn = document.querySelector('.submit-btn');
+            // Initialize EmailJS - Updated initialization method
+            emailjs.init({
+                publicKey: "84OeZ5U1fZ0-oidRm" // Your public key
+            });
+
+            // Add debugging to check if EmailJS is loaded
+            console.log('EmailJS loaded:', typeof emailjs !== 'undefined');
             
-            // Show loading state
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
+            // Form submission handling
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const responseMessage = document.getElementById('responseMessage');
+                const submitBtn = document.querySelector('.submit-btn');
+                
+                // Validation
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const subject = document.getElementById('subject').value.trim();
+                const message = document.getElementById('message').value.trim();
+                
+                if (!name || !email || !subject || !message) {
+                    showMessage('Please fill in all required fields.', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                // Prepare template parameters
+                const templateParams = {
+                    from_name: name,
+                    from_email: email,
+                    subject: subject,
+                    message: message,
+                    to_name: 'Izabella Hermogenes'
+                };
+                
+                console.log('Sending email with params:', templateParams);
+                
+                // Send email using EmailJS - Updated method
+                emailjs.send('service_a0o7rhk', 'template_u0dvo8k', templateParams)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        showMessage('Thank you for your message! I\'ll get back to you soon.', 'success');
+                        document.getElementById('contactForm').reset();
+                    })
+                    .catch(function(error) {
+                        console.error('FAILED...', error);
+                        showMessage('Sorry, there was an error sending your message. Please try again or contact me directly at izabmdh@gmail.com.', 'error');
+                    })
+                    .finally(function() {
+                        // Reset button
+                        submitBtn.textContent = 'Send Message';
+                        submitBtn.disabled = false;
+                    });
+            });
             
-            // Simulate form submission (replace with actual form handling)
-            setTimeout(() => {
-                responseMessage.textContent = 'Thank you for your message! I\'ll get back to you soon.';
-                responseMessage.className = 'response-message success';
+            // Helper function to show messages
+            function showMessage(text, type) {
+                const responseMessage = document.getElementById('responseMessage');
+                responseMessage.textContent = text;
+                responseMessage.className = `response-message ${type}`;
                 responseMessage.style.display = 'block';
-                
-                // Reset form
-                this.reset();
-                
-                // Reset button
-                submitBtn.textContent = 'Send Message';
-                submitBtn.disabled = false;
                 
                 // Hide message after 5 seconds
                 setTimeout(() => {
                     responseMessage.style.display = 'none';
                 }, 5000);
-            }, 1500);
+            }
         });
     </script>
+    <footer>
+    ©️ 2025 Izabella Hermogenes
+    </footer>
 </body>
 </html>
